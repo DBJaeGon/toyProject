@@ -17,6 +17,12 @@ module.exports = {
   },
   production: {
     url: process.env.DATABASE_URL,
+    options: {
+      define: {
+        timestamps: false,
+        freezeTableName: true
+      }
+    },
     dialect: 'mysql',
   },
 }
