@@ -97,21 +97,21 @@ hooks:
 # During the AfterInstall deployment lifecycle event, run the commands 
 #   in the script specified in "location".
   AfterInstall:
-    - location: /home/centos/toyProject/scripts/npmInstall.sh     
-      timeout: 180
-      runas: centos
-    - location: /home/centos/toyProject/client/scripts/npmInstall.sh     
-      timeout: 180
-      runas: centos
+    - location:
+      timeout: 
+      runas:
+    - location:  
+      timeout: 
+      runas: 
 # During the ApplicationStart deployment lifecycle event, run the commands 
 #   in the script specified in "location".
   ApplicationStart:
-    - location: /home/centos/toyProject/scripts/start.sh     
-      timeout: 180
-      runas: centos
-    - location: /home/centos/toyProject/client/scripts/start.sh
-      timeout: 180
-      runas: centos
+    - location:
+      timeout: 
+      runas: 
+    - location: 
+      timeout: 
+      runas: 
 # During the ValidateService deployment lifecycle event, run the commands 
 #   in the script specified in "location".
   ValidateService:
