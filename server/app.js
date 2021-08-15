@@ -29,6 +29,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 //========================================
 //               PASSPORT
 //========================================
+const db = require('./db/models');
+db.sequelize.sync();
+
+//========================================
+//               PASSPORT
+//========================================
 const passport = require('passport');
 const passportConfig = require('./middleware/passport');
 app.use(passport.initialize());
