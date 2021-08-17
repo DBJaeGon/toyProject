@@ -27,7 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // app.use(cors());
 
 //========================================
-//               PASSPORT
+//               DATABASE
 //========================================
 const db = require('./db/models');
 db.sequelize.sync();
