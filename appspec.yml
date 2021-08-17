@@ -3,4 +3,4 @@ os: linux
 
 files:
   - source: /
-    destination: /home/centos/toyProject
+    destination: /home/ec2-user/toyProject
