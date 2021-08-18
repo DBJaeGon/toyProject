@@ -39,7 +39,7 @@ const auth = (SpectificComponent, option, adminRoute = null) => {
                     await dispatch(currentLoc('Sign In'));
                 }
             }
-        }, []);
+        }, [dispatch, history]);
 
         return (
             <SpectificComponent />
