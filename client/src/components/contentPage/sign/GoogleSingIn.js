@@ -29,7 +29,7 @@ const GoogleSingIn = () => {
         console.log(err);
         message.error("로그인에 실패하였습니다.");
     };
-    
+
     return (
         <GoogleLogin 
             clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
