@@ -18,13 +18,23 @@ const path = require('path');
 const cors = require('cors');
 
 app.use(compression());
-app.use(helmet());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../client/build')));
 // app.use(cors());
+
+//========================================
+//                  CSP
+//========================================
+app.use(helmet.contentSecurityPolicy({
+    useDefaults: true,
+    directives: {
+        scriptSrc: ["self", "sha256-eE1k/Cs1U0Li9/ihPPQ7jKIGDvR8fYw65VJw+txfifw="]
+    }
+}));
 
 //========================================
 //               DATABASE
@@ -43,6 +53,9 @@ passportConfig();
 //========================================
 //                ROUTER
 //========================================
+express.Router().get('*', (req, res, next) => {
+    res.sendFile(express.static(path.join(__dirname, '../client/build', 'index.html')));
+});
 const indexRouter = require('./routes');
 app.use('/api', indexRouter);
 
