@@ -55,7 +55,7 @@ const SignIn = () => {
                 email: toyEmail
             });
         }
-    }, []);
+    }, [form]);
 
     return (
         <Row justify="center" align="middle">

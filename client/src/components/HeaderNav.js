@@ -45,18 +45,19 @@ const HeaderNav = () => {
     //     }
     // };
 
-    const selected = async() => {
-        const selectedMenu = document.querySelector('.ant-menu-item-selected');
-        await dispatch(currentLoc(selectedMenu.innerText));
-    };
+    // const selected = async() => {
+    //     const selectedMenu = document.querySelector('.ant-menu-item-selected');
+    //     await dispatch(currentLoc(selectedMenu.innerText));
+    // };
     
     useEffect(() => {
         window.addEventListener("scroll", onDelayScroll);
-        selected();
+        const selectedMenu = document.querySelector('.ant-menu-item-selected');
+        dispatch(currentLoc(selectedMenu.innerText));
         return () => {
             window.removeEventListener("scroll", onDelayScroll);
         };
-    }, [onDelayScroll]);
+    }, [onDelayScroll, dispatch]);
 
     const onClick = async () => {
         if(result) {
