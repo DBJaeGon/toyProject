@@ -27,6 +27,9 @@ jobs:
       with:
         node-version: '16.x'
         cache: 'npm'
+      
+    - name: Current location
+      run: pwd
     
     - name: Cache dependencies
       id: cache
