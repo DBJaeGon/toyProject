@@ -36,7 +36,6 @@ jobs:
         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-node-
-
     - name: Install Dependencies
       run: npm install
       
@@ -46,15 +45,16 @@ jobs:
       run: npm run build
 
     - name: Deploy
-      working-directory: /home/runner/work/toyProject
-      uses: aws-actions/configure-aws-credentials@v1
+      uses: jakejarvis/s3-sync-action@master
       with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ap-northeast-2
-        
-    - name: Upload  to S3
-      run: aws s3 cp --region ap-northeast-2 ./toyProject s3://toy-storage/node-deploy/toyProject
+        args: --follow-symlinks --delete
+      env:
+        AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+        DEST_DIR: ${{ secrets.DEST_DIR }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: 'ap-northeast-2'   
+        SOURCE_DIR: '/home/runner/work/toyProject/toyProject'  
 
     - name: Current Location
       run: pwd
