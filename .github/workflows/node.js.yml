@@ -58,4 +58,4 @@ jobs:
       run: aws s3 cp --region ap-northeast-2 ../toy.tar s3://toy-storage/node-deploy/toy.tar
       
     - name: Code Deploy
-      run: aws deploy create-deployment --application-name toy-CodeDeploy-Github --deployment-group-name toy-S3-Group --s3-location bucket=toy-storage,bundleType=tar,key=node-deploy/toy.tar
+      run: aws deploy create-deployment --application-name toy-CodeDeploy-Github --deployment-group-name toy-S3-Group --file-exists-behavior OVERWRITE --s3-location bucket=toy-storage,bundleType=tar,key=node-deploy/toy.tar

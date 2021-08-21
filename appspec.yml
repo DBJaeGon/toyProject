@@ -4,9 +4,11 @@ os: linux
 files:
   - source: /
     destination: /home/ec2-user/toyProject
-file_exists_behavior: OVERWRITE
 
 hooks:
+  ApplicationStop:
+    - location: script/stop.sh
+    - timeout: 90
   AfterInstall:
     - location: scripts/start.sh
     - timeout: 90
