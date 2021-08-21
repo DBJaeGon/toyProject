@@ -47,7 +47,7 @@ jobs:
     - name: Deploy
       uses: jakejarvis/s3-sync-action@master
       with:
-        args: --follow-symlinks --delete
+        args: --follow-symlinks --delete --exclude './client/node_modules/*' --exclude './git/*'
       env:
         AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
         DEST_DIR: ${{ secrets.DEST_DIR }}
@@ -55,6 +55,3 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
         AWS_REGION: 'ap-northeast-2'   
         SOURCE_DIR: '/home/runner/work/toyProject/toyProject'  
-
-    - name: Current Location
-      run: pwd
