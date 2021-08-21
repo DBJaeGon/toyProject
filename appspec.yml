@@ -7,7 +7,7 @@ files:
 
 hooks:
   ApplicationStop:
-    - location: script/stop.sh
+    - location: scripts/stop.sh
     - timeout: 90
   AfterInstall:
     - location: scripts/start.sh
