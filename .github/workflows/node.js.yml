@@ -47,9 +47,6 @@ jobs:
     - name: tar
       run: cd .. && tar -cvf ./toy.tar --exclude='.git' --exclude='.github' --exclude='./client/node_modules' ./*
 
-    - name: Current Directory
-      run: pwd && ls -al
-
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -58,7 +55,7 @@ jobs:
         aws-region: ${{ secrets.AWS_REGION }} 
         
     - name: Upload to S3
-      run: aws s3 cp --region ap-northeast-2 ./toy.tar s3://toy-storage/node-deploy/toy.tar
+      run: aws s3 cp --region ap-northeast-2 ../toy.tar s3://toy-storage/node-deploy/toy.tar
       
     - name: Code Deploy
       run: aws deploy create-deployment --application-name toy-CodeDeploy-Github --deployment-group-name toy-S3-Group --s3-location bucket=toy-storage,bundleType=tar,key=node-deploy/toy.tar
