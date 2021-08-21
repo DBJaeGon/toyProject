@@ -44,8 +44,8 @@ jobs:
         REACT_APP_GOOGLE_CLIENT_ID: ${{secrets.REACT_APP_GOOGLE_CLIENT_ID}}
       run: npm run build
 
-    -name: Zip
-     run: cd .. && tar -cvf toy.tar --exclude='.git' --exclude='.github' --exclude='./client/node_modules' ./*
+    - name: tar
+      run: cd .. && tar -cvf toy.tar --exclude='.git' --exclude='.github' --exclude='./client/node_modules' ./*
 
     - name: AWS S3 Upload
       uses: jakejarvis/s3-sync-action@master
