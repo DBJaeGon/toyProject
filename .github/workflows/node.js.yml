@@ -45,28 +45,17 @@ jobs:
       run: npm run build
 
     - name: tar
-      run: cd .. && tar -cvf toy.tar --exclude='.git' --exclude='.github' --exclude='./client/node_modules' ./*
+      run: cd .. && tar -cvf ./toy.tar --exclude='.git' --exclude='.github' --exclude='./client/node_modules' --exclude='README.md' ./*
 
-    - name: AWS S3 Upload
-      uses: jakejarvis/s3-sync-action@master
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
       with:
-        args: --follow-symlinks --delete --exclude 'client/node_modules/*' --exclude '.git/*' --exclude '.github/*'
-      env:
-        AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
-        DEST_DIR: ${{ secrets.DEST_DIR }}
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
-        AWS_REGION: 'ap-northeast-2'   
-        SOURCE_DIR: '/home/runner/work/toyProject/toyProject'  
-
-    - name: AWS CodeDeploy
-      uses: sourcetoad/aws-codedeploy-action@v1
-      with:
-        aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
-        aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
-        aws_region: ap-northeast-2
-        codedeploy_name: ${{ secrets.AWS_CODEDEPLOY_APP_NAME }}
-        codedeploy_group: ${{ secrets.AWS_CODEDEPLOY_GROUP }}
-        codedeploy_register_only: true
-        s3_bucket: ${{ secrets.AWS_S3_BUCKET }}
-        s3_folder: ${{ secrets.DEST_DIR }}
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+        aws-region: ${{ secrets.AWS_REGION }} 
+        
+    - name: Upload to S3
+      run: aws s3 cp --region ap-northeast-2 ../toy.tar s3://toy-storage/node-deploy/toy.tar
+      
+    - name: Code Deploy
+      run: aws deploy create-deployment --application-name toy-CodeDeploy-Github --deployment-group-name toy-S3-Group --file-exists-behavior OVERWRITE --s3-location bucket=toy-storage,bundleType=tar,key=node-deploy/toy.tar
