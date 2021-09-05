@@ -27,15 +27,18 @@ jobs:
       with:
         node-version: '14.x'
         cache: 'npm'
-    
-    - name: Cache dependencies
-      id: node-modules-cache
-      uses: actions/cache@v2
-      with:
-        path: ~/.npm
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
+
+      - name: Npm version
+        run: npm -v
+
+    # - name: Cache dependencies
+    #   id: node-modules-cache
+    #   uses: actions/cache@v2
+    #   with:
+    #     path: ~/.npm
+    #     key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+    #     restore-keys: |
+    #       ${{ runner.os }}-node-
     - name: Install Dependencies
       run: npm install
       
