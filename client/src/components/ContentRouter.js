@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 // import { useSelector } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import Home from 'components/contentPage/Home';
@@ -8,16 +8,24 @@ import HeaderNav from 'components/HeaderNav';
 import MyInfo from 'components/contentPage/MyInfo';
 import Image from 'components/contentPage/Image';
 import Chat from 'components/contentPage/Chat';
-import Boards from 'components/board/Boards';
+import Boards from 'components/boardPage/Boards';
 import Auth from 'hoc/auth';
 import { Layout } from 'antd';
-import Admin from 'components/Admin';
+import Admin from 'components/adminPage/Admin';
+import { useDispatch } from 'react-redux';
+import { fetchMainImage } from '_reducer/imageReducer';
 
 const { Content, Footer } = Layout;
 
 const ContentRouter = () => {
     // const { nav } = useSelector((state) => state.toggles);
     // style={{ marginLeft: `${nav ? 80 : 200}px` }}  
+    const dispatch = useDispatch();
+    
+    useEffect(() => {
+        dispatch(fetchMainImage());
+    }, [dispatch]);
+  
 
     return (
         <Layout>

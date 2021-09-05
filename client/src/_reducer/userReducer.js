@@ -39,7 +39,6 @@ export const fetchAuth = createAsyncThunk('/user/authUser', async(_, { rejectWit
         const {isLoading, authState} = getState().user;
         if(!isLoading || authState.currentRequestId !== requestId) return;
         const result = await axios.get('/api/users/auth');
-
         return result.data;
     } catch (error) {
         return rejectWithValue(error.response.data);
@@ -60,6 +59,7 @@ export const fetchGoogleOAuth = createAsyncThunk('/api/user/googleOAuth', async(
 
 const initialState = {
     isLoading: false,
+    clientId: '536025987557-nmfdq0h9r9e074vu23d12gn9jhv6jq49.apps.googleusercontent.com',
     signInState: {
         result: false,
         currentRequestId: undefined,
@@ -70,7 +70,7 @@ const initialState = {
     },
     authState: {
         result: false,
-        useInfo: {},
+        userInfo: {},
         currentRequestId: undefined,
     },
     errorMessage: ""
