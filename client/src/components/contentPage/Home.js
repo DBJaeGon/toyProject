@@ -1,15 +1,27 @@
 import React from 'react';
-import { Calendar } from 'antd';
+import {  useSelector } from 'react-redux';
+import { Image, Row, Col, Empty } from 'antd';
 
 const Home = () => {
 
-    function onPanelChange(value, mode) {
-      console.log(value.format('YYYY-MM-DD'), mode);
-    }  
+    const imageInfo = useSelector(state => state.image.main.imageInfo);
 
     return (
       <>
-        <Calendar onPanelChange={onPanelChange} />
+        {
+          imageInfo.length ?
+          imageInfo.map(image => {
+              return (
+                <Row justify="center">
+                  <Col>
+                    <Image key={image.uid} src={image.url} />
+                  </Col>
+                </Row>
+              );
+          })
+          :
+          <Empty description="No Image" />
+        }
       </>
     );
 };

@@ -28,6 +28,7 @@ const SiderNav = () => {
     const location = useLocation();
     const history = useHistory();
     const { result } = useSelector(state => state.user.signInState);
+    const { userInfo: { role }} = useSelector(state => state.user.authState);
     const [collapsed, setCollapsed] = useState(false);
 
     const onCollapse = async () => {
@@ -106,9 +107,13 @@ const SiderNav = () => {
                         <Link to="/signIn">Sign In</Link>
                     </Menu.Item>         
                 }
-                <Menu.Item key="/setting" icon={<SettingOutlined />}>
-                    <Link to="/setting">Setting</Link>
-                </Menu.Item>
+                {role ?
+                    <Menu.Item key="/setting" icon={<SettingOutlined />}>
+                        <Link to="/setting">Setting</Link>
+                    </Menu.Item>
+                    :
+                    null
+                }
             </Menu>
         </Sider>
     );

@@ -52,12 +52,11 @@ const HeaderNav = () => {
     
     useEffect(() => {
         window.addEventListener("scroll", onDelayScroll);
-        const selectedMenu = document.querySelector('.ant-menu-item-selected');
-        dispatch(currentLoc(selectedMenu.innerText));
+        dispatch(currentLoc(headerNav));
         return () => {
             window.removeEventListener("scroll", onDelayScroll);
         };
-    }, [onDelayScroll, dispatch]);
+    }, [onDelayScroll, dispatch, headerNav]);
 
     const onClick = async () => {
         if(result) {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { GoogleLogin } from 'react-google-login';
 import { fetchGoogleOAuth } from '_reducer/userReducer';
@@ -12,6 +12,7 @@ const GoogleSingIn = () => {
 
     const dispatch = useDispatch();
     const history = useHistory();
+    const { clientId } = useSelector(state => state.user);
 
     const onSuccess = async(res) => {
         const { profileObj: { email, familyName, givenName },
@@ -32,7 +33,7 @@ const GoogleSingIn = () => {
 
     return (
         <GoogleLogin 
-            clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+            clientId={clientId}
             buttonText="Google"
             onSuccess={onSuccess}
             onFailure={onFailure}

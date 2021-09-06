@@ -25,9 +25,9 @@ permissions:
 hooks:
   ApplicationStop:
     - location: scripts/stop.sh
-      timeout: 90
+      timeout: 180
       runas: ec2-user
   AfterInstall:
     - location: scripts/start.sh
-      timeout: 90
+      timeout: 180
       runas: ec2-user
