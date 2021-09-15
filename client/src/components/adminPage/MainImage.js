@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchMainImage, fetchMainImageDel, removeFile, previewFile } from '../../_reducer/imageReducer'
-import { Upload, Modal } from 'antd';
+import { Upload, Modal, message } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 
 function getBase64(file) {
@@ -47,6 +47,9 @@ const MainImage = () => {
     // };
 
     const handleRemove = async(file) => {
+        if(file.name.includes('homeImage1') || file.name.includes('homeImage2')) {
+            return message.error("지울 수 없는 이미지입니다!");
+        }
         await dispatch(fetchMainImageDel(file.name));
         await dispatch(removeFile(file.uid));
     };

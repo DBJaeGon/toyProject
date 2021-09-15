@@ -46,7 +46,7 @@ const SiderNav = () => {
                     const signOutState = unwrapResult(result);
                     if(signOutState.signOutSuccess) {
                         history.push('/');
-                        await dispatch(currentLoc("Home"));
+                        await dispatch(currentLoc(history.location.pathname));
                         message.success("Sign Out!");
                     }
                 } catch (error) {
@@ -57,12 +57,12 @@ const SiderNav = () => {
               console.log('Cancel');
             },
         });
-    }
+    };
 
     const onSelect = async(values) => {
         const loc = values.domEvent.target.innerText
         if(loc !== 'Sign Out') {
-            await dispatch(currentLoc(loc));
+            await dispatch(currentLoc(history.location.pathname));
         }
     };
     

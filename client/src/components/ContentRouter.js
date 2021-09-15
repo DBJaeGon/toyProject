@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 // import { useSelector } from 'react-redux';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, useHistory } from 'react-router-dom';
 import Home from 'components/contentPage/Home';
 import SignIn from 'components/contentPage/sign/SignIn';
 import SignUp from 'components/contentPage/sign/SignUp';
@@ -9,11 +9,15 @@ import MyInfo from 'components/contentPage/MyInfo';
 import Image from 'components/contentPage/Image';
 import Chat from 'components/contentPage/Chat';
 import Boards from 'components/boardPage/Boards';
+import Empty from 'components/contentPage/Empty';
 import Auth from 'hoc/auth';
 import { Layout } from 'antd';
 import Admin from 'components/adminPage/Admin';
 import { useDispatch } from 'react-redux';
 import { fetchMainImage } from '_reducer/imageReducer';
+import { currentLoc } from '_reducer/HeaderNavReducer';
+import FindPw from './contentPage/FindPw';
+// import { currentLoc } from '_reducer/HeaderNavReducer';
 
 const { Content, Footer } = Layout;
 
@@ -21,10 +25,12 @@ const ContentRouter = () => {
     // const { nav } = useSelector((state) => state.toggles);
     // style={{ marginLeft: `${nav ? 80 : 200}px` }}  
     const dispatch = useDispatch();
-    
+    const history = useHistory();
+
     useEffect(() => {
         dispatch(fetchMainImage());
-    }, [dispatch]);
+        dispatch(currentLoc(history.location.pathname));
+    }, [dispatch, history]);
   
 
     return (
@@ -41,6 +47,8 @@ const ContentRouter = () => {
                         <Route path="/signUp" component={Auth(SignUp, false)} />
                         <Route path="/myInfo" component={Auth(MyInfo, true)} />
                         <Route path="/setting" component={Auth(Admin, true, true)} />
+                        <Route path="/findPw" component={Auth(FindPw, false)} />
+                        <Route component={Auth(Empty, null)} />
                     </Switch>
                 </div>
             </Content>

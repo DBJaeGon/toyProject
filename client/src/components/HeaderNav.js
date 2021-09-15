@@ -52,17 +52,17 @@ const HeaderNav = () => {
     
     useEffect(() => {
         window.addEventListener("scroll", onDelayScroll);
-        dispatch(currentLoc(headerNav));
+        // dispatch(currentLoc(headerNav));
         return () => {
             window.removeEventListener("scroll", onDelayScroll);
         };
-    }, [onDelayScroll, dispatch, headerNav]);
+    }, [onDelayScroll]);
 
     const onClick = async () => {
         if(result) {
-            await dispatch(currentLoc("MyInfo"));
+            await dispatch(currentLoc("/myInfo"));
         } else {
-            await dispatch(currentLoc("Sign In"));
+            await dispatch(currentLoc("/signIn"));
         }
     };
 

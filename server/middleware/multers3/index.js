@@ -29,7 +29,7 @@ const upload = multer({
         acl: 'public-read',
         key: (req, file, cb) => {
             let extension = path.extname(file.originalname);
-            cb(null, 'medias/main/homeImage' + Date.now().toString() + extension);
+            cb(null, 'medias/main/homeImage3_' + Date.now().toString() + extension);
         }
     }),
 });
