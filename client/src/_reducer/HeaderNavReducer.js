@@ -1,7 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    headerNav: "Home"
+    headerNav: "Home",
+    menuList: {
+        "/": "Home",
+        "/boards": "Board",
+        "/image": "Image",
+        "/chat": "Chat",
+        "/signIn": "Sign In",
+        "/signUp": "Sign Up",
+        "/myInfo": "My Info",
+        "/setting": "Setting",
+        "/findPw": "Find Password"
+    }
 };
 
 const headerLocSlice = createSlice({
@@ -9,7 +20,12 @@ const headerLocSlice = createSlice({
     initialState,
     reducers: {
         currentLoc(state, action) {
-            state.headerNav = action.payload;
+            if(state.menuList[action.payload]){
+                state.headerNav = state.menuList[action.payload];
+            } else {
+                state.headerNav = "404";
+            }
+            // state.headerNav = action.payload;
         }
     }
 });

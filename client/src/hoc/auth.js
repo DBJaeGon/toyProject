@@ -24,11 +24,11 @@ const auth = (SpectificComponent, option, adminRoute = null) => {
                 if(adminRoute && !role) {
                     message.error('관리자 권한이 필요합니다.');
                     history.push('/');
-                    await dispatch(currentLoc('Home'));
+                    await dispatch(currentLoc(history.location.pathname));
                 } else {
                     if(option === null ? false : !option) {
                         history.push('/');
-                        await dispatch(currentLoc('Home'));
+                        await dispatch(currentLoc(history.location.pathname));
                     }
                 }
             } catch (error) {
@@ -36,7 +36,7 @@ const auth = (SpectificComponent, option, adminRoute = null) => {
                 if(option) {
                     message.error('로그인이 필요합니다.');
                     history.push('/signIn');
-                    await dispatch(currentLoc('Sign In'));
+                    await dispatch(currentLoc(history.location.pathname));
                 }
             }
         }, [dispatch, history]);

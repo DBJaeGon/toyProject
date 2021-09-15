@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { fetchSignUp } from '_reducer/userReducer';
 import { Form, Input, Button, Row, Col, message } from 'antd';
+import { currentLoc } from '_reducer/HeaderNavReducer';
 
 const formItemLayout = {
     labelCol: {
@@ -35,6 +36,7 @@ const SignUp = () => {
             const signUpResult = unwrapResult(result);
             if(signUpResult) {
                 history.push('/signIn');
+                await dispatch(currentLoc("/signIn"));
                 message.success("로그인 해주세요!");
             }
         } catch (error) {

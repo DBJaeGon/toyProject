@@ -75,6 +75,28 @@ router.get('/google/callback', passport.authenticate("google", {session: false, 
     // res.redirect('http://localhost:3000');
 });
 
+router.get('/github', passport.authenticate('github', { scope: ['user:email']}));
+
+router.get('/github/callback', async(req, res, next) => {
+    try {
+        passport.authenticate('github', { session: false, failureRedirect: '/signIn'}, async(githubError, user, msg) => {
+            try {
+                if(githubError || !user) {
+                    next(ApiError.serverError(githubError, 500, msg));
+                }
+
+                const token = await generateJWT(user);
+
+                res.cookie('token', token, {httpOnly: true, secure: false}).status(200).redirect('/');
+            } catch (error) {
+                next(ApiError.serverError(error, 500, "passport authenticate github Error"));
+            }
+        })(req, res, next);
+    } catch (error) {
+        next(ApiError.serverError(error, 500, "githubOAuth Error"));
+    }   
+});
+
 // router.get('/google/callback', async(req, res, next) => {
 //     try {
 //         passport.authenticate('google', {session: false}, async(googleError, user, msg) => {
@@ -91,7 +113,7 @@ router.get('/google/callback', passport.authenticate("google", {session: false, 
 //                 }
 //             })(req, res, next)
 //     } catch (error) {
-//         next(ApiError.serverError(error, 500, "googleAuth Error"));
+//         next(ApiError.serverError(error, 500, "googleOAuth Error"));
 //     }
 // });
 

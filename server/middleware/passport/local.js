@@ -6,7 +6,7 @@ const localConfig = { usernameField: 'email', passwordField: 'password' };
 
 const passportVerify = async(email, password, done) => {
     try {
-        const user = await User.findOne({ where: {email: email}});
+        const user = await User.findOne({ where: {email: email, provider: 'local'}});
         if(!user) {
             return done(null, false, "존재하지 않는 사용자입니다.");
         }

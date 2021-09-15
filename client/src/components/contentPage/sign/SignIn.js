@@ -5,9 +5,8 @@ import { unwrapResult } from '@reduxjs/toolkit';
 import { fetchSignIn } from '_reducer/userReducer';
 import { currentLoc } from '_reducer/HeaderNavReducer';
 import { Form, Input, Button, Checkbox, Row, Col, message } from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { UserOutlined, LockOutlined, GithubOutlined } from '@ant-design/icons';
 import GoogleSingIn from './GoogleSingIn';
-
 
 const SignIn = () => {
 
@@ -26,7 +25,7 @@ const SignIn = () => {
             const signInState = unwrapResult(result);
             if(signInState.signInSuccess) {
                 history.push('/');
-                await dispatch(currentLoc('Home'));
+                await dispatch(currentLoc(history.location.pathname));
             }
         } catch (error) {
             message.error(error.message);
@@ -47,6 +46,20 @@ const SignIn = () => {
     //         // message.error(error);
     //     }
     // };
+
+    // const onGithubOAuth = async() => {
+    //   try {
+    //     const result = await axios('/api/users/github');
+    //     console.log(result.data)
+    //   } catch (error) {
+    //     console.log(error);
+    //     message.error(error);
+    //   }
+    // };
+
+    const handleFindPw = async() => {
+      await dispatch(currentLoc('/findPw'));
+    };
 
     useEffect(() => {
         const toyEmail = window.localStorage.getItem("toyEmail");
@@ -101,7 +114,7 @@ const SignIn = () => {
                   <Checkbox>Remember me</Checkbox>
                 </Form.Item>
 
-                <Link className="signIn-form-forgot" to='/signUp'>Forgot password</Link>
+                <Link className="signIn-form-forgot" to='/findPw' onClick={handleFindPw}>Forgot password</Link>
               </Form.Item>
               
               <Form.Item>
@@ -112,7 +125,12 @@ const SignIn = () => {
                 {/* <Button type="white" htmlType="button" className="signIn-form-button" onClick={onGoogleOAuth}>
                   <GoogleOutlined style={{fontSize: "16px"}} />Google
                 </Button> */}
-                <Link to='/signUp'>register now!</Link>
+                <a href="http://localhost:5000/api/users/github">
+                  <Button type="white" htmlType="button" className="signIn-form-button">
+                    <GithubOutlined style={{fontSize: "16px"}} />Github
+                  </Button>
+                </a>
+                <Link to='/signUp' onClick={() => dispatch(currentLoc("/signUp"))}>register now!</Link>
               </Form.Item>
             </Form>
 

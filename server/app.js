@@ -12,29 +12,47 @@ dotenv.config();
 //========================================
 const compression = require('compression');
 const helmet = require('helmet');
+const csp = require('helmet-csp');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const path = require('path');
 const cors = require('cors');
 
+// app.use(cors());
 app.use(compression());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use('/images', express.static(path.join(__dirname, 'public/images')));
+// app.use('/images', express.static(path.join(__dirname, 'public/images')));
 app.use(express.static(path.join(__dirname, '../client/build')));
-// app.use(cors());
 
 //========================================
 //                  CSP
 //========================================
-app.use(helmet.contentSecurityPolicy({
+app.use(helmet());
+app.use(csp({
     useDefaults: true,
     directives: {
-        scriptSrc: ["self", "sha256-eE1k/Cs1U0Li9/ihPPQ7jKIGDvR8fYw65VJw+txfifw="]
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "'sha256-eE1k/Cs1U0Li9/ihPPQ7jKIGDvR8fYw65VJw+txfifw='", "apis.google.com"],
+        imgSrc: ["'self'", "data:", "toy-storage.s3.ap-northeast-2.amazonaws.com"],
+        frameSrc: ["'self'", "accounts.google.com"]
     }
-}));
+}))
+// const crypto = require('crypto');
+// app.use((req, res, next) => {
+//     res.locals.nonce = crypto.randomBytes(16).toString('hex');
+//     next();
+// });
+// app.use((req, res, next) => {
+//     csp({
+//         useDefaults: true,
+//         directives: {
+//             scriptSrc: ["'self'", `'nonce-${res.locals.nonce}'`],
+//         }
+//     })(req, res, next);
+// });
 
 //========================================
 //               DATABASE
@@ -53,11 +71,15 @@ passportConfig();
 //========================================
 //                ROUTER
 //========================================
-express.Router().get('*', (req, res, next) => {
-    res.sendFile(express.static(path.join(__dirname, '../client/build', 'index.html')));
-});
 const indexRouter = require('./routes');
 app.use('/api', indexRouter);
+
+//========================================
+//                CLIENT
+//========================================
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+});
 
 //========================================
 //                 ERROR

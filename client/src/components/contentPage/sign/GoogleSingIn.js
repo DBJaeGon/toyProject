@@ -22,7 +22,7 @@ const GoogleSingIn = () => {
         const isOAuth = unwrapResult(result);
         if(isOAuth) {
             history.push('/');
-            await dispatch(currentLoc('Home'));
+            await dispatch(currentLoc(history.location.pathname));
         }
     };
 
