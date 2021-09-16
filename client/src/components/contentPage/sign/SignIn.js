@@ -125,7 +125,7 @@ const SignIn = () => {
                 {/* <Button type="white" htmlType="button" className="signIn-form-button" onClick={onGoogleOAuth}>
                   <GoogleOutlined style={{fontSize: "16px"}} />Google
                 </Button> */}
-                <a href="http://localhost:5000/api/users/github">
+                <a href="http://ec2-3-35-47-19.ap-northeast-2.compute.amazonaws.com:5000/api/users/github">
                   <Button type="white" htmlType="button" className="signIn-form-button">
                     <GithubOutlined style={{fontSize: "16px"}} />Github
                   </Button>

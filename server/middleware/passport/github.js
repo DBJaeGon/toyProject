@@ -4,7 +4,7 @@ const User = require("../../db/models").users;
 const githubConfig = {
     clientID: process.env.GITHUB_CLIENT_ID,
     clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    callbackURL: "http://localhost:5000/api/users/github/callback"
+    callbackURL: "http://ec2-3-35-47-19.ap-northeast-2.compute.amazonaws.com:5000/api/users/github/callback"
 };
 
 const githubVerify = async(accessToken, refreshToken, profile, done) => {
