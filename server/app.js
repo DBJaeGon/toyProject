@@ -39,7 +39,8 @@ app.use(csp({
         imgSrc: ["'self'", "data:", "toy-storage.s3.ap-northeast-2.amazonaws.com"],
         frameSrc: ["'self'", "accounts.google.com"]
     }
-}))
+}));
+
 // const crypto = require('crypto');
 // app.use((req, res, next) => {
 //     res.locals.nonce = crypto.randomBytes(16).toString('hex');

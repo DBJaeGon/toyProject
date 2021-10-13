@@ -82,7 +82,7 @@ const SiderNav = () => {
             <div className={`${!collapsed ? "logo" : "logo-trans"}`}>
                 {!collapsed ? <UnlockTwoTone twoToneColor="#722ed1" style={{fontSize: "34px"}} /> : <LockTwoTone twoToneColor="#722ed1" style={{fontSize: "34px", }}/>}
                 <div className={`${!collapsed ? "logo-title" : "logo-title-trans"}`}>
-                    <span>ToyProject</span>
+                    <span>MyNote</span>
                 </div>
             </div>
             <Menu theme="dark" defaultSelectedKeys={['/']} mode="inline" onSelect={onSelect} selectedKeys={[location.pathname]}>
