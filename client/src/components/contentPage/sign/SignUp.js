@@ -40,7 +40,7 @@ const SignUp = () => {
                 message.success("로그인 해주세요!");
             }
         } catch (error) {
-            message.error(error);
+            message.error(error.message);
         }
     };
 
@@ -103,16 +103,16 @@ const SignUp = () => {
                 <Form.Item
                   name="password"
                   label="Password"
-                  tooltip={`- At least 8 characters long, max length 20
-                  - Include at least 1 lowercase letter, 1 capital letter, 1 number, 1 special character(!@#$%^&*)`
-                  }
+                  tooltip={`- 최소 8글자 ~ 최대 20글자, 대문자, 소문자, 특수문자를 적어도 1글자씩 포함해야합니다.`}
                   rules={[
                     {
                       required: true,
+                      min: 8,
+                      max: 20,
                       message: 'Please input your password!',
+                      pattern: /^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*])[\w!@#$%^&*]{8,}$/
                     },
-                  ]}
-                  hasFeedback
+                ]}
                 >
                   <Input.Password />
                 </Form.Item>

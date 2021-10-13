@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const passport = require('passport');
+const argon2 = require('argon2');
 const generateJWT = require('../middleware/generateJWT');
 const auth = require('../middleware/auth');
 const User = require('../db/models').users;
@@ -16,7 +17,11 @@ router.post('/signUp', async(req, res, next) => {
 
         res.json({signUpSuccess: true});
     } catch (error) {
-        next(ApiError.serverError(error, 500, "signUp Error"));
+        if(error.errors[0].type === "Validation error") {
+            next(ApiError.serverError(error, 500, "올바르지 않은 비밀번호입니다."));
+        } else {
+            next(ApiError.serverError(error, 500, "signUp Error"));
+        }
     }
 });
 
@@ -116,6 +121,29 @@ router.get('/github/callback', async(req, res, next) => {
 //         next(ApiError.serverError(error, 500, "googleOAuth Error"));
 //     }
 // });
+
+router.post('/confirmPassword', passport.authenticate('jwt', {session: false}), async(req, res, next) => {
+    try {
+        const comparePassword = await argon2.verify(req.user.password, req.body.password);
+        res.json(comparePassword);
+    } catch (error) {
+        next(ApiError.serverError(error, 500, "confirm password Error"));
+    }
+});
+
+router.post('/updateInfo', passport.authenticate('jwt', {session: false}), async(req, res, next) => {
+    try {
+        const user = req.user
+        const result = await user.update(req.body);
+        res.json(true)
+    } catch (error) {
+        if(error.errors[0].type === "Validation error") {
+            next(ApiError.serverError(error, 500, "올바르지 않은 비밀번호입니다."));
+        } else {
+            next(ApiError.serverError(error, 500, "signUp Error"));
+        }
+    }
+});
 
 router.get('/auth', auth, (req, res, next) => {
     try {

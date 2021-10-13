@@ -44,15 +44,15 @@ module.exports = (sequelize, DataTypes) => {
     },
     password: {
       type: DataTypes.STRING,
-      validate: {
-        is: {
-          args: /^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*])[\w!@#$%^&*]{8,}$/,
-          msg: `Passwords must be
-          - At least 8 characters long, max length 20
-          - Include at least 1 lowercase letter, 1 capital letter, 1 number, 1 special character => !@#$%^&*
-          `
-        }
-      }
+      // validate: {
+      //   is: {
+      //     args: /^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*])[\w!@#$%^&*]{8,}$/,
+      //     msg: `Passwords must be
+      //     - At least 8 characters long, max length 20
+      //     - Include at least 1 lowercase letter, 1 capital letter, 1 number, 1 special character => !@#$%^&*
+      //     `
+      //   }
+      // }
     },
     provider: {
       type: DataTypes.STRING,
@@ -79,6 +79,12 @@ module.exports = (sequelize, DataTypes) => {
           user.password = hash;
         }
       },
+      beforeUpdate: async(user, options) => {
+        if(user.password) {
+          const hash = await argon2.hash(user.password);
+          user.password = hash;
+        }
+      }
     },
     sequelize,
     modelName: 'users',

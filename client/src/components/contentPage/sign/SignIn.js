@@ -49,8 +49,12 @@ const SignIn = () => {
 
     // const onGithubOAuth = async() => {
     //   try {
-    //     const result = await axios('/api/users/github');
-    //     console.log(result.data)
+    //     const width = '450';
+    //     const height = '600';
+    //     const left = Math.ceil((window.screen.width - width)/2);
+    //     const top = Math.ceil((window.screen.height - height)/2);
+    //     window.open("http://localhost:5000/api/users/github", '_blank', `width=${width}, height=${height}, left=${left}, top=${top}`); 
+    //     return false;
     //   } catch (error) {
     //     console.log(error);
     //     message.error(error);
@@ -99,9 +103,12 @@ const SignIn = () => {
                 rules={[
                   {
                     required: true,
-                    message: 'Please input your Password!',
+                    min: 8,
+                    max: 20,
+                    message: 'Please input your password!',
+                    pattern: /^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*])[\w!@#$%^&*]{8,}$/
                   },
-                ]}
+              ]}
               >
                 <Input
                   prefix={<LockOutlined className="site-form-item-icon" />}
@@ -125,7 +132,8 @@ const SignIn = () => {
                 {/* <Button type="white" htmlType="button" className="signIn-form-button" onClick={onGoogleOAuth}>
                   <GoogleOutlined style={{fontSize: "16px"}} />Google
                 </Button> */}
-                <a href="http://ec2-3-35-47-19.ap-northeast-2.compute.amazonaws.com:5000/api/users/github">
+                {/* <a href="http://localhost:5000/api/users/github"> */}
+                <a href="https://jaegon.xyz/api/users/github">
                   <Button type="white" htmlType="button" className="signIn-form-button">
                     <GithubOutlined style={{fontSize: "16px"}} />Github
                   </Button>
