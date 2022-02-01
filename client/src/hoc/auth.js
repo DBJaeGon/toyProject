@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { fetchAuth } from '_reducer/userReducer';
-import { currentLoc } from '_reducer/HeaderNavReducer';
+import { currentLoc } from '_reducer/headerNavReducer';
 import { message } from 'antd';
 
 const auth = (SpectificComponent, option, adminRoute = null) => {   

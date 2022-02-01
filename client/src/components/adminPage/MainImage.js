@@ -1,119 +1,117 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchMainImage, fetchMainImageDel, removeFile, previewFile } from '../../_reducer/imageReducer'
-import { Upload, Modal, message } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  fetchMainImage,
+  fetchMainImageDel,
+  removeFile,
+  previewFile,
+} from "../../_reducer/imageReducer";
+import { Upload, Modal, message } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
 
 function getBase64(file) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = error => reject(error);
-    });
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });
 }
 
 const MainImage = () => {
+  const dispatch = useDispatch();
 
-    const dispatch = useDispatch();
+  const imageInfo = useSelector((state) => state.image.main.imageInfo);
+  const { previewVisible, previewTitle, previewImage } = useSelector((state) => state.image.main);
 
-    const imageInfo = useSelector(state => state.image.main.imageInfo);
-    const { previewVisible, previewTitle, previewImage } = useSelector(state => state.image.main);
+  const handleCancel = () => {
+    dispatch(previewFile({ previewVisible: false }));
+  };
 
-    const handleCancel = () => {
-        dispatch(previewFile({previewVisible: false}));
+  const handlePreview = async (file) => {
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj);
+    }
+
+    const previewObj = {
+      previewImage: file.url || file.preview,
+      previewVisible: true,
+      previewTitle: file.name || file.url.substring(file.url.lastIndexOf("/") + 1),
     };
+    dispatch(previewFile(previewObj));
+  };
 
-    const handlePreview = async file => {
-      if (!file.url && !file.preview) {
-        file.preview = await getBase64(file.originFileObj);
-      }
-      
-      const previewObj = {
-        previewImage: file.url || file.preview,
-        previewVisible: true,
-        previewTitle: file.name || file.url.substring(file.url.lastIndexOf('/') + 1),
-      }
-      dispatch(previewFile(previewObj));
-    };
-  
-    // const handleChange = async(info) => {
-    //     const { status } = info.file;
-    //     if (status === 'uploading') {
-    //         message.success(`${info.file.name} file uploaded successfully.`);
-    //     }  else if (status === 'error') {
-    //       message.error(`${info.file.name} file upload failed.`);
-    //     }        
-    // };
+  // const handleChange = async(info) => {
+  //     const { status } = info.file;
+  //     if (status === 'uploading') {
+  //         message.success(`${info.file.name} file uploaded successfully.`);
+  //     }  else if (status === 'error') {
+  //       message.error(`${info.file.name} file upload failed.`);
+  //     }
+  // };
 
-    const handleRemove = async(file) => {
-        if(file.name.includes('homeImage1') || file.name.includes('homeImage2')) {
-            return message.error("지울 수 없는 이미지입니다!");
-        }
-        await dispatch(fetchMainImageDel(file.name));
-        await dispatch(removeFile(file.uid));
-    };
+  const handleRemove = async (file) => {
+    if (file.name.includes("homeImage1") || file.name.includes("homeImage2")) {
+      return message.error("지울 수 없는 이미지입니다!");
+    }
+    await dispatch(fetchMainImageDel(file.name));
+    await dispatch(removeFile(file.uid));
+  };
 
-    const handleSuccess = async(res) => {
-        console.log(res)
-        await dispatch(fetchMainImage());
-    };
+  const handleSuccess = async (res) => {
+    console.log(res);
+    await dispatch(fetchMainImage());
+  };
 
-    // useEffect(() => {
-    //     if(fileObj) {
-    //         dispatch(addFile(fileObj));
-    //     }
-    // }, [dispatch, fileObj]);
+  // useEffect(() => {
+  //     if(fileObj) {
+  //         dispatch(addFile(fileObj));
+  //     }
+  // }, [dispatch, fileObj]);
 
-    // const handleBeforeUpload = async(file) => {
-    //     const fileInfo = {
-    //         uid: file.uid,
-    //         name: file.name,
-    //         status: "done",
-    //         url: `http://localhost:5000/images/${file.name}`
-    //     };
-    //     setFileObj(fileInfo);
-    // };
+  // const handleBeforeUpload = async(file) => {
+  //     const fileInfo = {
+  //         uid: file.uid,
+  //         name: file.name,
+  //         status: "done",
+  //         url: `http://localhost:5000/images/${file.name}`
+  //     };
+  //     setFileObj(fileInfo);
+  // };
 
-    const uploadButton = (
-        <div>
-            <UploadOutlined />
-            <div style={{ marginTop: 8 }}>Upload</div>
-        </div>
-    );
+  const uploadButton = (
+    <div>
+      <UploadOutlined />
+      <div style={{ marginTop: 8 }}>Upload</div>
+    </div>
+  );
 
-    return (
-        <>
-            <Upload 
-                name="mainImage"
-                action="api/image/mainUpload"
-                listType="picture-card"
-                fileList={imageInfo}
-                onPreview={handlePreview}
-                onSuccess={handleSuccess}
-                // onChange={handleChange}
-                onRemove={handleRemove}
-                // beforeUpload={handleBeforeUpload}
-            >
-                {imageInfo.langth >= 8 ? null : uploadButton}
-            </Upload>
-            <Modal
-                visible={previewVisible}
-                title={previewTitle}
-                footer={null}
-                onCancel={handleCancel}
-            >
-            <img alt="example" style={{ width: '100%' }} src={previewImage} />
-            </Modal>
-        </>
-    );
+  return (
+    <>
+      <Upload
+        name="mainImage"
+        action="api/image/mainUpload"
+        listType="picture-card"
+        fileList={imageInfo}
+        onPreview={handlePreview}
+        onSuccess={handleSuccess}
+        // onChange={handleChange}
+        onRemove={handleRemove}
+        // beforeUpload={handleBeforeUpload}
+      >
+        {imageInfo.length >= 8 ? null : uploadButton}
+      </Upload>
+      <Modal visible={previewVisible} title={previewTitle} footer={null} onCancel={handleCancel}>
+        <img alt="example" style={{ width: "100%" }} src={previewImage} />
+      </Modal>
+    </>
+  );
 };
 
 export default MainImage;
 
-
 // const uploadProps = {
-        
+
 //     beforeUpload(file) {
 //         return new Promise(resolve => {
 //           const reader = new FileReader();

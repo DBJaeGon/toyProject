@@ -1,7 +1,7 @@
 import React from 'react';
 import { Result, Button} from 'antd';
 import { Link } from 'react-router-dom';
-import { currentLoc } from '_reducer/HeaderNavReducer';
+import { currentLoc } from '_reducer/headerNavReducer';
 import { useDispatch } from 'react-redux';
 
 const Empty = () => {
