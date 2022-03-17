@@ -1,45 +1,53 @@
-const express = require('express');
+const express = require("express");
 const app = express();
+const { createServer } = require("http");
+const httpServer = createServer(app);
 
 //========================================
 //             PROCESS ENV
 //========================================
-const dotenv = require('dotenv');
+const dotenv = require("dotenv");
 dotenv.config();
 
 //========================================
 //              MIDDLEWARE
 //========================================
-const compression = require('compression');
-const helmet = require('helmet');
-const csp = require('helmet-csp');
-const logger = require('morgan');
-const cookieParser = require('cookie-parser');
-const path = require('path');
-const cors = require('cors');
+const compression = require("compression");
+const helmet = require("helmet");
+const csp = require("helmet-csp");
+const logger = require("morgan");
+const cookieParser = require("cookie-parser");
+const path = require("path");
+const cors = require("cors");
 
 // app.use(cors());
 app.use(compression());
-app.use(logger('dev'));
+app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 // app.use('/images', express.static(path.join(__dirname, 'public/images')));
-app.use(express.static(path.join(__dirname, '../client/build')));
+app.use(express.static(path.join(__dirname, "../client/build")));
 
 //========================================
 //                  CSP
 //========================================
 app.use(helmet());
-app.use(csp({
+app.use(
+  csp({
     useDefaults: true,
     directives: {
-        defaultSrc: ["'self'"],
-        scriptSrc: ["'self'", "'sha256-eE1k/Cs1U0Li9/ihPPQ7jKIGDvR8fYw65VJw+txfifw='", "apis.google.com"],
-        imgSrc: ["'self'", "data:", "toy-storage.s3.ap-northeast-2.amazonaws.com"],
-        frameSrc: ["'self'", "accounts.google.com"]
-    }
-}));
+      defaultSrc: ["'self'"],
+      scriptSrc: [
+        "'self'",
+        "'sha256-eE1k/Cs1U0Li9/ihPPQ7jKIGDvR8fYw65VJw+txfifw='",
+        "apis.google.com",
+      ],
+      imgSrc: ["'self'", "data:", "toy-storage.s3.ap-northeast-2.amazonaws.com"],
+      frameSrc: ["'self'", "accounts.google.com"],
+    },
+  })
+);
 
 // const crypto = require('crypto');
 // app.use((req, res, next) => {
@@ -56,40 +64,54 @@ app.use(csp({
 // });
 
 //========================================
+//             SOCKET.IO
+//========================================
+const { Server } = require("socket.io");
+const io = new Server(httpServer, { path: "/api/chat" });
+const registerChat = require("./routes/chat");
+
+const onConnection = (socket) => {
+  // console.log(socket.id);
+  registerChat(io, socket);
+};
+
+io.on("connection", onConnection);
+
+//========================================
 //               DATABASE
 //========================================
-const db = require('./db/models');
+const db = require("./db/models");
 db.sequelize.sync();
 
 //========================================
 //               PASSPORT
 //========================================
-const passport = require('passport');
-const passportConfig = require('./middleware/passport');
+const passport = require("passport");
+const passportConfig = require("./middleware/passport");
 app.use(passport.initialize());
 passportConfig();
 
 //========================================
 //                ROUTER
 //========================================
-const indexRouter = require('./routes');
-app.use('/api', indexRouter);
+const indexRouter = require("./routes");
+app.use("/api", indexRouter);
 
 //========================================
 //                CLIENT
 //========================================
-app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../client/build", "index.html"));
 });
 
 //========================================
 //                 ERROR
 //========================================
-const ApiError = require('./error/ApiError');
-const apiErrorHandler = require('./error/api-error-handler');
+const ApiError = require("./error/ApiError");
+const apiErrorHandler = require("./error/api-error-handler");
 
 app.use((req, res, next) => {
-    next(ApiError.serverError(null, 404, '해당 페이지는 존재하지 않습니다!'));
+  next(ApiError.serverError(null, 404, "해당 페이지는 존재하지 않습니다!"));
 });
 
 app.use(apiErrorHandler);
@@ -97,13 +119,12 @@ app.use(apiErrorHandler);
 //========================================
 //                SERVER
 //========================================
-const port = process.env.PORT || '3000';
-app.listen(port, () => {
-    console.log('Server start!');
+const port = process.env.PORT || "3000";
+httpServer.listen(port, () => {
+  console.log("Server start!");
 });
 
 module.exports = app;
-
 
 // const argon2 = require('argon2');
 // const db = require('./db/models');
@@ -120,7 +141,7 @@ module.exports = app;
 //                 id: id
 //             }
 //         });
-//     }); 
+//     });
 // }));
 
 // db.sequelize.sync({force: true})

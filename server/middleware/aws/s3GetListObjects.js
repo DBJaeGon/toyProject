@@ -1,24 +1,24 @@
-const { ListObjectsCommand } = require('@aws-sdk/client-s3');
-const { s3Client } = require('./s3Client');
-const ApiError = require('../../error/ApiError');
+const { ListObjectsCommand } = require("@aws-sdk/client-s3");
+const { s3Client } = require("./s3Client");
+const ApiError = require("../../error/ApiError");
 
-const bucketParams = {
-    Bucket: "toy-storage",
-    Prefix: "medias/main/homeImage"
-};
-
-module.exports = async(req, res, next) => {
-    try {
-        const data = await s3Client.send(new ListObjectsCommand(bucketParams));
-        // console.log("Success", data);
-        const images = data.Contents.map(image => {
-            return image.Key;
-        });
-        req.mainImages = images;
-        next();
-    } catch (error) {
-        return next(ApiError.serverError(error, 500, "S3 getListObject Error!"));
-    }
+module.exports = async (req, res, next) => {
+  try {
+    const bucketParams = {
+      Bucket: "toy-storage",
+      Prefix: "medias" + req.route.path,
+    };
+    const data = await s3Client.send(new ListObjectsCommand(bucketParams));
+    // console.log("Success", data);
+    const images = [];
+    data.Contents.map((image, idx) => {
+      if (idx !== 0) images.push(image.Key);
+    });
+    req.images = images;
+    next();
+  } catch (error) {
+    return next(ApiError.serverError(error, 500, "S3 getListObject Error!"));
+  }
 };
 
 // Import required AWS SDK clients and commands for Node.js.
