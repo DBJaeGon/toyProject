@@ -20,6 +20,12 @@ export const fetchImages = createAsyncThunk(
   async (_, { rejectWithValue, getState, requestId }) => {
     try {
       const { images } = getState().image;
+      // const {
+      //   authState: {
+      //     userInfo: { uid },
+      //   },
+      // } = getState().user;
+      // console.log(uid);
       if (!images.isLoading || images.currentRequestId !== requestId) return;
       const result = await axios.get("/api/image/images");
       return result.data;
@@ -29,11 +35,13 @@ export const fetchImages = createAsyncThunk(
   }
 );
 
-export const fetchMainImageDel = createAsyncThunk(
+export const fetchImageDel = createAsyncThunk(
   "image/delete",
-  async (fileName, { rejectWithValue }) => {
+  async (imgInfo, { rejectWithValue }) => {
     try {
-      const result = await axios.delete(`/api/image/main/${fileName}`);
+      const result = await axios.delete(`/api/image/remove/${imgInfo.path}`, {
+        data: { name: imgInfo.fileName },
+      });
       return result.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -67,8 +75,8 @@ const imageSlice = createSlice({
   initialState,
   reducers: {
     removeFile(state, action) {
-      state.main.imageInfo = state.main.imageInfo.filter((file) => {
-        return file.uid !== action.payload;
+      state.images.imageInfo = state.images.imageInfo.filter((file) => {
+        return file.name !== action.payload;
       });
     },
     previewFile(state, action) {

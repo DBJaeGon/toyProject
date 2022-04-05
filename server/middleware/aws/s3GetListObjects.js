@@ -1,12 +1,13 @@
 const { ListObjectsCommand } = require("@aws-sdk/client-s3");
 const { s3Client } = require("./s3Client");
 const ApiError = require("../../error/ApiError");
+const { AWS_S3_FOLDER_PATH } = process.env;
 
 module.exports = async (req, res, next) => {
   try {
     const bucketParams = {
       Bucket: "toy-storage",
-      Prefix: "medias" + req.route.path,
+      Prefix: AWS_S3_FOLDER_PATH + req.route.path,
     };
     const data = await s3Client.send(new ListObjectsCommand(bucketParams));
     // console.log("Success", data);
