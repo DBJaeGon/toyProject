@@ -213,7 +213,7 @@ const MyInfo = () => {
                 onCancel={handleCancel}
                 footer={[
                     <Button key="back" onClick={handleCancel}>
-                        Cancle
+                        Cancel
                     </Button>,
                     <Button key="submit" type="primary" loading={loading} onClick={onConfirmPassword}>
                         Submit

@@ -28,10 +28,9 @@ const SiderNav = () => {
   const history = useHistory();
   const { result } = useSelector((state) => state.user.signInState);
   const {
-    userInfo: { role },
+    userInfo: { isAuth },
   } = useSelector((state) => state.user.authState);
   const [collapsed, setCollapsed] = useState(false);
-
   const onCollapse = async () => {
     setCollapsed(!collapsed);
   };
@@ -118,7 +117,7 @@ const SiderNav = () => {
             <Link to="/signIn">Sign In</Link>
           </Menu.Item>
         )}
-        {role ? (
+        {isAuth ? (
           <Menu.Item key="/setting" icon={<SettingOutlined />}>
             <Link to="/setting">Setting</Link>
           </Menu.Item>

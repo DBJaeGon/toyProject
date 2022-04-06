@@ -6,7 +6,7 @@ import SignIn from "components/contentPage/sign/SignIn";
 import SignUp from "components/contentPage/sign/SignUp";
 import HeaderNav from "components/HeaderNav";
 import MyInfo from "components/contentPage/MyInfo";
-import Images from "components/contentPage/Images";
+import Images from "components/imagePage/Images";
 import Chat from "components/contentPage/Chat";
 import Boards from "components/boardPage/Boards";
 import Empty from "components/contentPage/Empty";
@@ -43,7 +43,8 @@ const ContentRouter = () => {
             <Route path="/signIn" component={Auth(SignIn, false)} />
             <Route path="/signUp" component={Auth(SignUp, false)} />
             <Route path="/myInfo" component={Auth(MyInfo, true)} />
-            <Route path="/setting" component={Auth(Admin, true, true)} />
+            {/* <Route path="/setting" component={Auth(Admin, true, true)} /> */}
+            <Route path="/setting" component={Auth(Admin, true)} />
             <Route path="/findPw" component={Auth(FindPw, false)} />
             <Route component={Auth(Empty, null)} />
           </Switch>
