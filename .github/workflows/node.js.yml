@@ -46,8 +46,7 @@ jobs:
         run: npm run build
 
       - name: tar
-        run: cd .. && tar -cvf ./toy.tar --exclude='.git' --exclude='.gitignore' --exclude='.github' --exclude='./client/.gitignore --exclude='./client/node_modules' --exclude='README.md' .
-
+        run: cd .. && tar -cvf ./toy.tar --exclude='.git' --exclude='.gitignore' --exclude='.github' --exclude='./client/.gitignore' --exclude='./client/node_modules' --exclude='README.md' .
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
