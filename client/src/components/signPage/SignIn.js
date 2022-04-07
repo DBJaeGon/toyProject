@@ -5,8 +5,7 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import { fetchSignIn } from "_reducer/userReducer";
 import { currentLoc } from "_reducer/headerNavReducer";
 import { Form, Input, Button, Checkbox, Row, Col, message, PageHeader, Descriptions } from "antd";
-import { UserOutlined, LockOutlined, GithubOutlined } from "@ant-design/icons";
-import GoogleSingIn from "./GoogleSingIn";
+import { UserOutlined, LockOutlined, GithubOutlined, GoogleOutlined } from "@ant-design/icons";
 
 const SignIn = () => {
   const dispatch = useDispatch();
@@ -138,12 +137,13 @@ const SignIn = () => {
             <Button type="primary" htmlType="submit" className="signIn-form-button">
               Sign In
             </Button>
-            <GoogleSingIn />
-            {/* <Button type="white" htmlType="button" className="signIn-form-button" onClick={onGoogleOAuth}>
-                  <GoogleOutlined style={{fontSize: "16px"}} />Google
-                </Button> */}
-            {/* <a href="http://localhost:5000/api/users/github"> */}
-            <a href="https://jaegon.xyz/api/users/github">
+            <a href="/api/users/google">
+              <Button type="white" htmlType="button" className="signIn-form-button">
+                <GoogleOutlined style={{ fontSize: "16px" }} />
+                Google
+              </Button>
+            </a>
+            <a href="/api/users/github">
               <Button type="white" htmlType="button" className="signIn-form-button">
                 <GithubOutlined style={{ fontSize: "16px" }} />
                 Github

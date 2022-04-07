@@ -74,6 +74,9 @@ module.exports = (sequelize, DataTypes) => {
       accessToken: {
         type: DataTypes.STRING,
       },
+      refreshToken: {
+        type: DataTypes.STRING,
+      },
     },
     {
       hooks: {
@@ -84,7 +87,7 @@ module.exports = (sequelize, DataTypes) => {
           }
         },
         beforeUpdate: async (user, options) => {
-          if (user.password) {
+          if (user._previousDataValues.password !== user.password) {
             const hash = await argon2.hash(user.password);
             user.password = hash;
           }
