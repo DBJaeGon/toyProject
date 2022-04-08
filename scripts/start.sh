@@ -4,5 +4,4 @@ cd /home/ec2-user/toyProject/client
 npm install
 cd /home/ec2-user/toyProject
 npm install
-npx sequelize db:migrate
 pm2 start /home/ec2-user/ecosystem.config.js --env production
