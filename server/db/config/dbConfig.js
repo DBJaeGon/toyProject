@@ -1,4 +1,4 @@
-require('dotenv').config();
+require("dotenv").config();
 
 module.exports = {
   development: {
@@ -6,23 +6,23 @@ module.exports = {
     options: {
       define: {
         timestamps: false,
-        freezeTableName: true
-      }
+        freezeTableName: true,
+      },
     },
-    dialect: 'mysql',
+    dialect: "mysql",
   },
   test: {
     url: process.env.TEST_DATABASE_URL,
-    dialect: 'mysql',
+    dialect: "mysql",
   },
   production: {
     url: process.env.DATABASE_URL,
     options: {
       define: {
         timestamps: false,
-        freezeTableName: true
-      }
+        freezeTableName: true,
+      },
     },
-    dialect: 'mysql',
+    dialect: "mysql",
   },
-}
+};

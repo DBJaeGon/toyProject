@@ -7,6 +7,7 @@ import { UploadBtn } from "./UploadBtn";
 
 const Images = () => {
   const imageInfo = useSelector((state) => state.image.images.imageInfo);
+  const { isAuth } = useSelector((state) => state.user.authState.userInfo);
 
   const dispatch = useDispatch();
 
@@ -52,7 +53,7 @@ const Images = () => {
           <Empty description="No Image" />
         )}
       </Row>
-      <UploadBtn />
+      {isAuth && <UploadBtn />}
     </>
   );
 };
