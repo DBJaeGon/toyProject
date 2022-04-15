@@ -16,7 +16,7 @@ const Home = () => {
   }, [dispatch]);
 
   return (
-    <Row justify="center" style={{ width: "900px", margin: "0 auto" }}>
+    <Row justify="center" style={{ maxWidth: "130vh", margin: "0 auto" }}>
       <Row>
         <Introduce />
       </Row>

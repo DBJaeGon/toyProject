@@ -25,6 +25,7 @@ const HeaderNav = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const { headerNav } = useSelector((state) => state.headerNav);
   const { result } = useSelector((state) => state.user.signInState);
+  const { userInfo } = useSelector((state) => state.user.authState);
 
   const onDelayScroll = useMemo(
     () =>
@@ -68,6 +69,17 @@ const HeaderNav = () => {
     }
   };
 
+  const avatarImg = () => {
+    if (userInfo.userImage) {
+      return <Avatar src={userInfo.userImage} onClick={onClick} />;
+    }
+    return (
+      <Avatar style={{ background: "#722ed1" }} onClick={onClick}>
+        {userInfo.lastName + userInfo.firstName}
+      </Avatar>
+    );
+  };
+
   return (
     <Header
       className={`site-layout-background ${isScrolled ? "header-shadow" : ""}`}
@@ -79,11 +91,7 @@ const HeaderNav = () => {
         </Col>
         <Col span={1} offset={19} style={{ textAlign: "center" }}>
           {result ? (
-            <Link to="/myInfo">
-              <Avatar style={{ background: "#722ed1" }} onClick={onClick}>
-                User
-              </Avatar>
-            </Link>
+            <Link to="/myInfo">{avatarImg()}</Link>
           ) : (
             <Link to="/signIn">
               <Button onClick={onClick}>Sign In</Button>

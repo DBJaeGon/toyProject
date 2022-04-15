@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { currentLoc } from "_reducer/headerNavReducer";
 import { fetchSignOut } from "_reducer/userReducer";
+import { signOutMsg } from "_reducer/chatReducer";
 // import { navToggle } from '../_reducer/togglesReducer';
 import { Layout, Menu, Modal, message } from "antd";
 import {
@@ -18,6 +19,7 @@ import {
   SettingOutlined,
   MessageOutlined,
 } from "@ant-design/icons";
+import axios from "axios";
 
 const { Sider } = Layout;
 const { confirm } = Modal;
@@ -28,7 +30,7 @@ const SiderNav = () => {
   const history = useHistory();
   const { result } = useSelector((state) => state.user.signInState);
   const {
-    userInfo: { isAuth },
+    userInfo: { uid },
   } = useSelector((state) => state.user.authState);
   const [collapsed, setCollapsed] = useState(false);
   const onCollapse = async () => {
@@ -45,6 +47,13 @@ const SiderNav = () => {
           const result = await dispatch(fetchSignOut());
           const signOutState = unwrapResult(result);
           if (signOutState.signOutSuccess) {
+            // Chat
+            const path = `/chatFiles/${uid}/`;
+            await dispatch(signOutMsg());
+            await axios.delete("/api/chat/remove", {
+              params: { path },
+            });
+
             history.push("/");
             await dispatch(currentLoc(history.location.pathname));
             message.success("Sign Out!");
@@ -117,7 +126,7 @@ const SiderNav = () => {
             <Link to="/signIn">Sign In</Link>
           </Menu.Item>
         )}
-        {isAuth ? (
+        {result ? (
           <Menu.Item key="/setting" icon={<SettingOutlined />}>
             <Link to="/setting">Setting</Link>
           </Menu.Item>

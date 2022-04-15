@@ -8,7 +8,7 @@ const User = require("../db/models").users;
 // const upload = require('../middleware/multer');
 const upload = require("../middleware/multers3");
 const images = require("../middleware/aws/s3GetListObjects");
-const deleteHomeImage = require("../middleware/aws/s3DeleteObject");
+const deleteImage = require("../middleware/aws/s3DeleteObject");
 const ApiError = require("../error/ApiError");
 const { sequelize } = require("../db/models");
 
@@ -89,7 +89,7 @@ router.post("/mainUpload", upload.single("mainImage"), (req, res, next) => {
   res.json({ S3Upload: "Success" });
 });
 
-router.post("/imgUpload", upload.single("imgFile"), async (req, res, next) => {
+router.post("/upload/:path", upload.single("imgFile"), async (req, res, next) => {
   // console.log(req.body);
   // console.log(req.imageInfo);
   // console.log(req.file);
@@ -112,11 +112,11 @@ router.post("/imgUpload", upload.single("imgFile"), async (req, res, next) => {
 //========================================
 //       DELETE OBJECT TO AWS S3
 //========================================
-router.delete("/remove/:imgPath", deleteHomeImage, async (req, res, next) => {
+router.delete("/remove", deleteImage, async (req, res, next) => {
   try {
     await Image.destroy({
       where: {
-        name: req.body.name,
+        name: req.body.fileName,
       },
     });
     res.status(200).json({ imgDel: true });

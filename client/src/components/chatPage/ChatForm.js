@@ -1,24 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Row, Col, Form, Input, Button } from "antd";
 import { MessageOutlined, EnterOutlined } from "@ant-design/icons";
-import io from "socket.io-client";
+import moment from "moment";
 
-const socket = io("/", { path: "/api/chat" });
-
-const ChatForm = () => {
-  const date = new Date();
+const ChatForm = ({ socket }) => {
   const user = useSelector((state) => state.user.authState.userInfo);
-  // const [socket, setSocket] = useState();
   const [chatMessage, setChatMessage] = useState("");
   const [form] = Form.useForm();
-
-  useEffect(() => {
-    // setSocket(i  o("/", { path: "/api/chat" }));
-    socket.on("sendMsg", (msg) => {
-      console.log(msg);
-    });
-  }, []);
 
   const handleMsgChange = (e) => {
     const value = e.target.value;
@@ -26,15 +15,18 @@ const ChatForm = () => {
   };
 
   const submitChatMsg = () => {
-    const userId = user.id;
-    const userName = user.lastName + " " + user.firstName;
-    const currentTime = date.toLocaleDateString();
-    const type = "Image";
+    if (!chatMessage) return;
+    const userId = user.uid;
+    const userName = user.lastName + user.firstName;
+    const userImage = user.userImage;
+    const sendTime = moment();
+    const type = "text";
     socket.emit("chatMsg", {
       chatMessage,
       userId,
       userName,
-      currentTime,
+      userImage,
+      sendTime,
       type,
     });
     setChatMessage("");
@@ -43,7 +35,7 @@ const ChatForm = () => {
   return (
     <Row>
       <Form layout="inline" form={form} onFinish={submitChatMsg} style={{ width: "100%" }}>
-        <Col offset={3} span={14}>
+        <Col span={20}>
           <Input
             id="message"
             prefix={<MessageOutlined />}

@@ -7,13 +7,13 @@ module.exports = async (req, res, next) => {
   try {
     const bucketParams = {
       Bucket: "toy-storage",
-      Prefix: AWS_S3_FOLDER_PATH + req.route.path,
+      Prefix: AWS_S3_FOLDER_PATH + req.query.path,
     };
     const data = await s3Client.send(new ListObjectsCommand(bucketParams));
     // console.log("Success", data);
     const images = [];
     data.Contents.map((image, idx) => {
-      if (idx !== 0) images.push(image.Key);
+      if (image.Size !== 0) images.push(image.Key);
     });
     req.images = images;
     next();

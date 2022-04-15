@@ -4,6 +4,8 @@ import { Col, Row, Typography, Image, Button, Modal } from "antd";
 
 const { Title, Paragraph } = Typography;
 
+const buttonStyle = { marginLeft: "10px", borderRadius: "30px" };
+
 const Introduce = () => {
   const [isVisible, setIsVisible] = useState(false);
   const imageInfo = useSelector((state) => state.image.main.imageInfo);
@@ -30,7 +32,7 @@ const Introduce = () => {
         <Typography>
           <Title level={2}>Introduce</Title>
           <Paragraph>
-            이곳은 제가 관심있던 기술들을 사용해 구현한 웹 애플리케이션입니다.
+            이곳은 CMS을 구현하기 위해 개발중인 웹 애플리케이션입니다!
             <br /> 편하게 구경해주세요!
           </Paragraph>
           <Paragraph>
@@ -51,7 +53,8 @@ const Introduce = () => {
             </Modal>
           </Paragraph>
           <Paragraph>
-            <Button type="primary" onClick={handleGitPage}>
+            코드는 여기서 확인할 수 있습니다.
+            <Button style={buttonStyle} type="primary" onClick={handleGitPage}>
               Git
             </Button>
           </Paragraph>

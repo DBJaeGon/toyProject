@@ -1,75 +1,112 @@
-@import '/node_modules/antd/dist/antd.less';
-
-
-
+@import "/node_modules/antd/dist/antd.less";
 
 //==================================
 //             nav-logo
 //==================================
 .logo {
-    display: flex;
-    height: 32px;
-    margin: 10px;
-    transform: translate(0, 0);
-    transition: 0.35s;
+  display: flex;
+  height: 32px;
+  margin: 10px;
+  transform: translate(0, 0);
+  transition: 0.35s;
 }
 
 .logo-trans {
-    display: flex;
-    height: 32px;
-    margin: 10px 0px 10px 0px;
-    overflow: hidden;
-    transform: translate(24px, 0);
-    transition: 0.35s;
+  display: flex;
+  height: 32px;
+  margin: 10px 0px 10px 0px;
+  overflow: hidden;
+  transform: translate(24px, 0);
+  transition: 0.35s;
 }
 
 .logo-title {
-    flex: auto;
-    margin-left: 10px; 
-    font-size: 22px; 
-    color: #fff;
-    opacity: 1;
-    transition: opacity 0.35s linear;
+  flex: auto;
+  margin-left: 10px;
+  font-size: 22px;
+  color: #fff;
+  opacity: 1;
+  transition: opacity 0.35s linear;
 }
 
 .logo-title-trans {
-    flex: auto;
-    margin-left: 0px; 
-    font-size: 22px; 
-    color: #fff;
-    opacity: 0;
-    transition: opacity 0.35s linear;
+  flex: auto;
+  margin-left: 0px;
+  font-size: 22px;
+  color: #fff;
+  opacity: 0;
+  transition: opacity 0.35s linear;
 }
-
 
 //==================================
 //       header-scroll-shadow
 //==================================
 .header-shadow {
-    box-shadow: 0px 1px 2px 0px rgb(60 64 67 / 30%), 0px 1px 3px 1px rgb(60 64 67 / 15%);
+  box-shadow: 0px 1px 2px 0px rgb(60 64 67 / 30%), 0px 1px 3px 1px rgb(60 64 67 / 15%);
 }
-
 
 //==================================
 //          sign-in-form
 //==================================
-.signIn-form, .signUp-form {
-    margin-top: 24px;
+.signIn-form,
+.signUp-form {
+  margin-top: 24px;
 }
 
 .signIn-form-forgot {
-    float: right;
+  float: right;
 }
 
 .ant-col-rtl .signIn-form-forgot {
-    float: left;
+  float: left;
 }
 
-.signIn-form-button, .signUp-form-button {
-    width: 100%;
-    margin-bottom: 10px;
+.signIn-form-button,
+.signUp-form-button {
+  width: 100%;
+  margin-bottom: 10px;
 }
 
 //==================================
 //             side-nav
 //==================================
+
+//==================================
+//             chat
+//==================================
+.infinite-container {
+  padding: 15px;
+  height: 62vh;
+  overflow-y: scroll;
+  background-color: #b4d3db;
+  border-radius: 5px;
+}
+
+.infinite-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.infinite-container::-webkit-scrollbar-thumb {
+  height: 17%;
+  background-color: #efefef;
+  border-radius: 10px;
+}
+
+.infinite-container::-webkit-scrollbar-track {
+  background-color: #b4d3db;
+}
+
+// FireFox
+.infinite-container {
+  scrollbar-width: thin;
+  scrollbar-base-color: #b4d3db;
+  scrollbar-highlight-color: aqua;
+}
+
+.ant-upload.ant-upload-drag .ant-upload {
+  padding: 0;
+}
+
+.ant-comment-inner {
+  padding-bottom: 5px;
+}

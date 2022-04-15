@@ -36,7 +36,7 @@ export const UploadBtn = () => {
     const formData = new FormData();
     formData.append("imgFile", file[0]);
     formData.append("imgContent", imgContent);
-    await axios.post("/api/image/imgUpload", formData);
+    await axios.post("/api/image/upload/images", formData);
 
     setUploadVisible(false);
     setFile([]);
