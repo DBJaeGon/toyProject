@@ -7,7 +7,7 @@ import { UploadBtn } from "./UploadBtn";
 
 const Images = () => {
   const imageInfo = useSelector((state) => state.image.images.imageInfo);
-  const { isAuth } = useSelector((state) => state.user.authState.userInfo);
+  const { result } = useSelector((state) => state.user.signInState);
 
   const dispatch = useDispatch();
 
@@ -24,7 +24,7 @@ const Images = () => {
               <div key={index}>
                 <Col>
                   <Card
-                    style={{ width: "600px" }}
+                    style={{ maxWidth: "120vh" }}
                     hoverable
                     cover={
                       <Image
@@ -53,7 +53,7 @@ const Images = () => {
           <Empty description="No Image" />
         )}
       </Row>
-      {isAuth && <UploadBtn />}
+      {result && <UploadBtn />}
     </>
   );
 };

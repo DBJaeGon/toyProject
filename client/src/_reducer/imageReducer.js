@@ -7,7 +7,7 @@ export const fetchMainImage = createAsyncThunk(
     try {
       const { main } = getState().image;
       if (!main.isLoading || main.currentRequestId !== requestId) return;
-      const result = await axios.get("/api/image/main");
+      const result = await axios.get("/api/image/main", { params: { path: "/main" } });
       return result.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -27,7 +27,7 @@ export const fetchImages = createAsyncThunk(
       // } = getState().user;
       // console.log(uid);
       if (!images.isLoading || images.currentRequestId !== requestId) return;
-      const result = await axios.get("/api/image/images");
+      const result = await axios.get("/api/image/images", { params: { path: "/images" } });
       return result.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -39,8 +39,8 @@ export const fetchImageDel = createAsyncThunk(
   "image/delete",
   async (imgInfo, { rejectWithValue }) => {
     try {
-      const result = await axios.delete(`/api/image/remove/${imgInfo.path}`, {
-        data: { name: imgInfo.fileName },
+      const result = await axios.delete(`/api/image/remove`, {
+        data: imgInfo,
       });
       return result.data;
     } catch (error) {

@@ -50,7 +50,7 @@ const ContentRouter = () => {
           </Switch>
         </div>
       </Content>
-      <Footer style={{ marginTop: "40px", textAlign: "center" }}>
+      <Footer style={{ marginTop: "10px", textAlign: "center" }}>
         Toy Project ©2021 Created by Jaegon
       </Footer>
     </Layout>

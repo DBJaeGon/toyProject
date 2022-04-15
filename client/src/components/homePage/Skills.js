@@ -20,7 +20,6 @@ const Skills = () => {
         >
           React.js <br />
           Redux <br />
-          Vue.js
         </Card>
       </Col>
       <Col span={7}>
@@ -31,8 +30,8 @@ const Skills = () => {
           Linux <br />
           Socket.io <br />
           AWS <br />
-          firebase <br />
-          Git
+          Git <br />
+          Github
         </Card>
       </Col>
     </Row>

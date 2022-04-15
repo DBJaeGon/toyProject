@@ -1,12 +1,25 @@
 import React from "react";
-import { Image, Row, Col, Typography } from "antd";
+import { Image, Row, Col, Typography, Button } from "antd";
 import { useSelector } from "react-redux";
 
 const { Paragraph } = Typography;
 
+const buttonStyle = { marginLeft: "10px", borderRadius: "30px" };
+
 const AboutMe = () => {
   const imageInfo = useSelector((state) => state.image.main.imageInfo);
   // console.log(imageInfo ? "is" : "sin't");
+
+  const handleNotionPage = () => {
+    window.open("https://bit.ly/34IEKu4", "_blank");
+  };
+  const handleResumePage = () => {
+    window.open(
+      "https://excellent-eyebrow-b8e.notion.site/00c228f669984596874e30fbaa49eec0",
+      "_blank"
+    );
+  };
+
   return (
     <Row justify="start" style={{ width: "100%", marginTop: "50px" }}>
       <Col span={8}>
@@ -25,13 +38,21 @@ const AboutMe = () => {
             <br /> 현재 주로 사용하고 있는 언어는 Javascript이고 Java도 공부하고 있습니다.
           </Paragraph>
           <Paragraph>
-            여러 api, 도구들을 사용하면서 document를 보는 것에 익숙지고 있습니다.
-            <br /> 코딩을 하면서 가독성이 중요하다고 생각해 깔끔한 코딩을 하려고 하고있습니다.
-            <br /> 요즘은 네이밍의 중요성을 다시 깨닫고 있습니다.
+            여러가지 middleware를 사용해보고 있고, 배포를 하면서 코딩외적인 부분도 많이 배우고
+            있습니다.
+            <br /> 빠른 개발을 위해 front로 ant design을 사용하였습니다.
           </Paragraph>
           <Paragraph>
-            저의 이력서는 Image 페이지의 첫번째 이미지로 올려두었고
-            <br /> 두번째 이미지는 현재 이 웹 애플리케이션의 파이프라인 이미지입니다.
+            필요한 정보를 정리해두는 곳입니다.
+            <Button style={buttonStyle} type="primary" onClick={handleNotionPage}>
+              Notion
+            </Button>
+          </Paragraph>
+          <Paragraph>
+            이력서입니다.
+            <Button style={buttonStyle} type="primary" onClick={handleResumePage}>
+              Resume
+            </Button>
           </Paragraph>
         </Typography>
       </Col>
