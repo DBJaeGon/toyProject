@@ -9,7 +9,8 @@ const bucketParams = {
 
 module.exports = async (req, res, next) => {
   try {
-    bucketParams.Key = AWS_S3_FOLDER_PATH + "/images/" + req.params.imgPath + "/" + req.body.name;
+    const imgPath = req.body.path + "/" + req.body.userFolder + "/" + req.body.fileName;
+    bucketParams.Key = AWS_S3_FOLDER_PATH + imgPath;
     console.log(bucketParams);
     const data = await s3Client.send(new DeleteObjectCommand(bucketParams));
     // console.log("Success", data);

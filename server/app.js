@@ -66,16 +66,7 @@ app.use(
 //========================================
 //             SOCKET.IO
 //========================================
-const { Server } = require("socket.io");
-const io = new Server(httpServer, { path: "/api/chat" });
-const registerChat = require("./routes/chat");
-
-const onConnection = (socket) => {
-  // console.log(socket.id);
-  registerChat(io, socket);
-};
-
-io.on("connection", onConnection);
+require("./middleware/chat")(httpServer);
 
 //========================================
 //               DATABASE

@@ -40,7 +40,7 @@ const MyImages = () => {
     // if (file.name.includes("homeImage1") || file.name.includes("homeImage2")) {
     //   return message.error("지울 수 없는 이미지입니다!");
     // }
-    const imgInfo = { path: file.userId, fileName: file.name };
+    const imgInfo = { path: "/images", userFolder: file.userId, fileName: file.name };
     // console.log(imgInfo);
     await dispatch(fetchImageDel(imgInfo));
     await dispatch(removeFile(file.name));

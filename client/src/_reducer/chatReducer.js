@@ -1,24 +1,42 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+// import axios from "axios";
 
-const fetchChatSend = createAsyncThunk("chat/sand", async (msg, { rejectWithValue, requestId }) => {
-  try {
-  } catch (error) {
-    rejectWithValue(error.response.data);
+export const fetchChatUpload = createAsyncThunk(
+  "chat/upload",
+  async (file, { rejectWithValue, requestId }) => {
+    try {
+      const formData = new FormData();
+      formData.append("chatUpload", file);
+      // const { data } = await axios.post("/api/chat/file", formData);
+      // console.log(data);
+    } catch (error) {
+      rejectWithValue(error.response.data);
+    }
   }
-});
+);
 
-const initialState = {};
+const initialState = {
+  message: [],
+};
 
 const chatSlice = createSlice({
   name: "chat",
   initialState,
-  reducers: {},
+  reducers: {
+    addMsg(state, action) {
+      state.message.push(action.payload);
+    },
+    signOutMsg(state, action) {
+      state.message = [];
+    },
+  },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchChatSend.pending, (state, action) => {})
-      .addCase(fetchChatSend.fulfilled, (state, action) => {})
-      .addCase(fetchChatSend.rejected, (state, action) => {});
+      .addCase(fetchChatUpload.pending, (state, action) => {})
+      .addCase(fetchChatUpload.fulfilled, (state, action) => {})
+      .addCase(fetchChatUpload.rejected, (state, action) => {});
   },
 });
 
+export const { addMsg, signOutMsg } = chatSlice.actions;
 export default chatSlice.reducer;

@@ -33,7 +33,7 @@ const upload = multer({
       let extension = path.extname(file.originalname);
 
       const { id, uid } = await User.findOne({ where: { token: req.cookies.token } });
-      const uploadPath = AWS_S3_FOLDER_PATH + `/images/${uid}/`;
+      const uploadPath = AWS_S3_FOLDER_PATH + "/" + req.params.path + `/${uid}/`;
       const imgName = "Image_" + Date.now().toString() + extension;
 
       req.imageInfo = { uploadPath, imgName, id };
