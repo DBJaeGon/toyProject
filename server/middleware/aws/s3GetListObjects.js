@@ -12,9 +12,11 @@ module.exports = async (req, res, next) => {
     const data = await s3Client.send(new ListObjectsCommand(bucketParams));
     // console.log("Success", data);
     const images = [];
-    data.Contents.map((image, idx) => {
-      if (image.Size !== 0) images.push(image.Key);
-    });
+    if (data.Contents) {
+      data.Contents.map((image, idx) => {
+        if (image.Size !== 0) images.push(image.Key);
+      });
+    }
     req.images = images;
     next();
   } catch (error) {

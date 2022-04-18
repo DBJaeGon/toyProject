@@ -32,6 +32,7 @@ const SiderNav = () => {
   const {
     userInfo: { uid },
   } = useSelector((state) => state.user.authState);
+  const chatMessage = useSelector((state) => state.chat.message);
   const [collapsed, setCollapsed] = useState(false);
   const onCollapse = async () => {
     setCollapsed(!collapsed);
@@ -48,11 +49,13 @@ const SiderNav = () => {
           const signOutState = unwrapResult(result);
           if (signOutState.signOutSuccess) {
             // Chat
-            const path = `/chatFiles/${uid}/`;
-            await dispatch(signOutMsg());
-            await axios.delete("/api/chat/remove", {
-              params: { path },
-            });
+            if (chatMessage.length) {
+              const path = `/chatFiles/${uid}/`;
+              await dispatch(signOutMsg());
+              await axios.delete("/api/chat/remove", {
+                params: { path },
+              });
+            }
 
             history.push("/");
             await dispatch(currentLoc(history.location.pathname));

@@ -11,6 +11,7 @@ const bucketParams = {
 module.exports = async (req, res, next) => {
   try {
     // console.log(req.images);
+    if (!req.images.length) return next();
     req.images.map((file) => {
       bucketParams.Delete.Objects.push({ Key: file });
     });
