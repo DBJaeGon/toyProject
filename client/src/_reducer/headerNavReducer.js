@@ -5,6 +5,7 @@ const initialState = {
   menuList: {
     "/": "Home",
     "/boards": "Board",
+    "/boards/create": "Board Create",
     "/image": "Image",
     "/chat": "Chat",
     "/signIn": "Sign In",

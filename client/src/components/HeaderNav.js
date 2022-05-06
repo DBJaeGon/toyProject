@@ -86,10 +86,13 @@ const HeaderNav = () => {
       style={{ padding: 0, position: "sticky", top: 0, zIndex: 100 }}
     >
       <Row>
-        <Col span={3} style={{ textAlign: "center", fontSize: "17px", fontWeight: "bold" }}>
+        <Col
+          span={8}
+          style={{ textAlign: "start", fontSize: "17px", fontWeight: "bold", paddingLeft: "25px" }}
+        >
           {headerNav}
         </Col>
-        <Col span={1} offset={19} style={{ textAlign: "center" }}>
+        <Col span={1} push={14} style={{ textAlign: "center" }}>
           {result ? (
             <Link to="/myInfo">{avatarImg()}</Link>
           ) : (

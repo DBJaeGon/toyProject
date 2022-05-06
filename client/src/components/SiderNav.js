@@ -9,7 +9,7 @@ import { signOutMsg } from "_reducer/chatReducer";
 import { Layout, Menu, Modal, message } from "antd";
 import {
   HomeOutlined,
-  ContainerOutlined,
+  // ContainerOutlined,
   CameraOutlined,
   LoginOutlined,
   LogoutOutlined,
@@ -111,9 +111,9 @@ const SiderNav = () => {
         <Menu.Item key="/" icon={<HomeOutlined />}>
           <Link to="/">Home</Link>
         </Menu.Item>
-        <Menu.Item key="/boards" icon={<ContainerOutlined />}>
+        {/* <Menu.Item key="/boards" icon={<ContainerOutlined />}>
           <Link to="/boards">Borad</Link>
-        </Menu.Item>
+        </Menu.Item> */}
         <Menu.Item key="/image" icon={<CameraOutlined />}>
           <Link to="/image">Image</Link>
         </Menu.Item>
