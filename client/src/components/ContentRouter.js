@@ -16,6 +16,7 @@ import Admin from "components/adminPage/Admin";
 import { useDispatch } from "react-redux";
 import { currentLoc } from "_reducer/headerNavReducer";
 import FindPw from "./contentPage/FindPw";
+import CreateBoard from "./boardPage/CreateBoard";
 // import { currentLoc } from '_reducer/HeaderNavReducer';
 
 const { Content, Footer } = Layout;
@@ -37,7 +38,8 @@ const ContentRouter = () => {
         <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
           <Switch>
             <Route exact path="/" component={Auth(Home, null)} />
-            <Route path="/boards" component={Auth(Boards, null)} />
+            <Route exact path="/boards" component={Auth(Boards, null)} />
+            <Route path="/boards/create" component={Auth(CreateBoard, true)} />
             <Route path="/Image" component={Auth(Images, null)} />
             <Route path="/chat" component={Auth(Chat, true)} />
             <Route path="/signIn" component={Auth(SignIn, false)} />
