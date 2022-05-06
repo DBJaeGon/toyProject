@@ -19,7 +19,7 @@ const Admin = () => {
       >
         <MyImages />
       </TabPane>
-      <TabPane tab={<span>Test01</span>} key="2">
+      {/* <TabPane tab={<span>Test01</span>} key="2">
         context02
       </TabPane>
       <TabPane tab={<span>Test02</span>} key="3">
@@ -31,21 +31,7 @@ const Admin = () => {
         .<br />
         .<br />
         .<br />
-        .<br />
-        .<br />
-        .<br />
-        .<br />
-        .<br />
-        .<br />
-        .<br />
-        .<br />
-        .<br />
-        .<br />
-        .<br />
-        .<br />
-        .<br />
-        .<br />
-      </TabPane>
+      </TabPane> */}
     </Tabs>
   );
 };
